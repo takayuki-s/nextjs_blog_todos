@@ -39,6 +39,33 @@ export default function Auth() {
     }
   };
 
+  const authUser = async (e) => {
+    e.preventDefault();
+    if (isLogin) {
+      login();
+    } else {
+      try {
+        await fetch(
+          `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/auth/jwt/register/`,
+          {
+            method: "POST",
+            body: JSON.stringify({ username: username, password: password }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        ).then((res) => {
+          if (res.status === 400) {
+            throw "authentication failed";
+          }
+        });
+        login();
+      } catch (err) {
+        alert(err);
+      }
+    }
+  };
+
   return (
     <>
       <div className="max-w-md w-full space-y-8">
