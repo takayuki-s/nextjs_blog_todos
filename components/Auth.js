@@ -26,6 +26,7 @@ export default function Auth() {
           if (res.status === 400) {
             throw "authentication failed";
           } else if (res.ok) {
+            console.log(res);
             return res.json();
           }
         })
@@ -48,16 +49,13 @@ export default function Auth() {
       login();
     } else {
       try {
-        await fetch(
-          `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/auth/jwt/register/`,
-          {
-            method: "POST",
-            body: JSON.stringify({ username: username, password: password }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        ).then((res) => {
+        await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/register/`, {
+          method: "POST",
+          body: JSON.stringify({ username: username, password: password }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((res) => {
           if (res.status === 400) {
             throw "authentication failed";
           }
