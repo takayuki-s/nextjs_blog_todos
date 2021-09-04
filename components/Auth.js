@@ -8,7 +8,7 @@ export default function Auth() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
 
   const login = async () => {
     try {
@@ -30,12 +30,15 @@ export default function Auth() {
           }
         })
         .then((data) => {
+          console.log("データ取得");
+          console.log(data);
           const options = { path: "/" };
           cookie.set("access_token", data.access, options);
         });
       router.push("/main-page");
     } catch (err) {
       alert(err);
+      console.log(err);
     }
   };
 
