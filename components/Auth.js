@@ -26,7 +26,6 @@ export default function Auth() {
           if (res.status === 400) {
             throw "authentication failed";
           } else if (res.ok) {
-            console.log(res);
             return res.json();
           }
         })
