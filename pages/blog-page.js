@@ -5,7 +5,7 @@ export default function BlogPage() {
   return (
     <Layout title="BlogPage">
       <Link href="/main-page">
-        <div className="w-6 h-6 mr-3">
+        <div className="flex cursor-pointer mt-12">
           <svg
             className="w-6 h-6 mr-3"
             fill="none"
