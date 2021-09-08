@@ -2,13 +2,28 @@ import Layout from "../components/Layout";
 import Link from "next/link";
 import { getAllTasksData } from "../lib/tasks";
 import Task from "../components/Task";
+import useSWR from "swr";
+import { useEffect } from "react";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-task/`;
 
 export default function TaskPage({ staticfilteredTasks }) {
+  const { data: tasks, mutate } = useSWR(apiUrl, fetcher, {
+    initialData: staticfilteredTasks,
+  });
+  const filteredTasks = tasks?.sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+  useEffect(() => {
+    mutate();
+  }, []);
+
   return (
     <Layout title="TaskPage">
       <ul>
-        {staticfilteredTasks &&
-          staticfilteredTasks.map((task) => <Task key={task.id} task={task} />)}
+        {filteredTasks &&
+          filteredTasks.map((task) => <Task key={task.id} task={task} />)}
       </ul>
       <Link href="/main-page">
         <div className="flex cursor-pointer mt-12">
