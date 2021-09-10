@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export default function Task({ task }) {
+  console.log(task);
   return (
     <div>
       <span>{task.id}</span>
