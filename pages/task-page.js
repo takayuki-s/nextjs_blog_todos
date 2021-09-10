@@ -84,6 +84,5 @@ export async function getStaticProps() {
   const staticfilteredTasks = await getAllTasksData();
   return {
     props: { staticfilteredTasks },
-    revalidate: 3,
   };
 }
