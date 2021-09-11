@@ -3,7 +3,7 @@ import { Cookie } from "universal-cookie";
 
 const cookie = new Cookie();
 
-export default function Task({ task }) {
+export default function Task({ task, taskDeleted }) {
   const deleteTask = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/tasks/${task.id}`, {
       method: "DELETE",
@@ -16,6 +16,7 @@ export default function Task({ task }) {
         alert("JWT Token not valid");
       }
     });
+    taskDeleted();
   };
   return (
     <div>
