@@ -1,25 +1,40 @@
+import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
+import useSWR from "swr";
 import { getAllTaskIds, getTaskData } from "../../lib/tasks";
 
-export default function Task({ task }) {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/detail-task`;
+
+export default function Post({ staticTask, id }) {
   const router = useRouter();
+  const { data: task, mutate } = useSWR(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/detail-task/${id}`,
+    fetcher,
+    {
+      fallbackData: staticTask,
+    }
+  );
+
+  useEffect(() => {
+    mutate();
+  }, []);
 
   if (router.isFallback || !task) {
     return <div>Loading...</div>;
   }
   return (
     <Layout title={task.title}>
-      <p className="m-4">
+      <span className="m-4">
         {"ID : "}
         {task.id}
-      </p>
+      </span>
       <p className="mb-4 text-xl font-bold">{task.title}</p>
       <p className="mb-12">{task.created_at}</p>
-      <p className="px-10">{task.content}</p>
       <Link href="/task-page">
-        <div className="flex cursor-pointer mt-12">
+        <div className="flex cursor-pointer mt-8">
           <svg
             className="w-6 h-6 mr-3"
             fill="none"
@@ -50,10 +65,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const { task: task } = await getTaskData(params.id);
+  const { task: staticTask } = await getTaskData(params.id);
   return {
     props: {
-      task,
+      id: staticTask.id,
+      staticTask,
     },
     revalidate: 3,
   };
