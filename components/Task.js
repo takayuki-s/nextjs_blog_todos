@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Cookie } from "universal-cookie";
+import Cookie from "universal-cookie";
 
 const cookie = new Cookie();
 
@@ -30,7 +30,7 @@ export default function Task({ task, taskDeleted }) {
       <div className="float-right ml-20">
         <svg
           onClick={deleteTask}
-          class="w-6 h-6 mr-2 cursor-pointer"
+          className="w-6 h-6 mr-2 cursor-pointer"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
