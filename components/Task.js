@@ -11,8 +11,8 @@ export default function Task({ task, taskDeleted }) {
         "Content-Type": "application/json",
         Authorization: `JWT ${cookie.get("access_token")}`,
       },
-    }).then(() => {
-      if (resizeBy.status === 401) {
+    }).then((res) => {
+      if (res.status === 401) {
         alert("JWT Token not valid");
       }
     });
