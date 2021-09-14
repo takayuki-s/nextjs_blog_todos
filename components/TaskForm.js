@@ -8,7 +8,7 @@ export default function TaskForm({ taskCreated }) {
   const { selectedTask, setSelectedTask } = useContext(StateContext);
   const create = async (e) => {
     e.preventDefault();
-    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/tasks`, {
+    await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/tasks/`, {
       method: "POST",
       body: JSON.stringify({ title: selectedTask.title }),
       headers: {
