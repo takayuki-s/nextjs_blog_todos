@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { useEffect } from "react";
 
 import StateContextProvider from "../context/StateContext";
+import TaskForm from "../components/TaskForm";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const apiUrl = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-task`;
@@ -24,6 +25,7 @@ export default function TaskPage({ staticfilteredTasks }) {
   return (
     <StateContextProvider>
       <Layout title="Task page">
+        <TaskForm taskCreated={mutate} />
         <ul>
           {filteredTasks &&
             filteredTasks.map((task) => (
